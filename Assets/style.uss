@@ -1,0 +1,135 @@
+.letter-container {
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+    max-width: 96px;
+    max-height: 96px;
+    min-width: 96px;
+    min-height: 96px;
+    border-left-color: rgb(212, 212, 212);
+    border-right-color: rgb(212, 212, 212);
+    border-top-color: rgb(212, 212, 212);
+    border-bottom-color: rgb(212, 212, 212);
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    justify-content: center;
+    align-items: center;
+    align-self: auto;
+    flex-direction: column;
+}
+
+.letter-container--before-preview {
+    scale: 0 0;
+}
+
+.letter-container--preview {
+    border-left-color: rgb(124, 124, 124);
+    border-right-color: rgb(124, 124, 124);
+    border-top-color: rgb(124, 124, 124);
+    border-bottom-color: rgb(124, 124, 124);
+    transition-property: scale;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+    scale: 1 1;
+}
+
+.letter-container--incorrect {
+    background-color: rgb(120, 124, 126);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.letter-container--spot-incorrect {
+    background-color: rgb(201, 180, 88);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.letter-container--correct {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgb(106, 170, 100);
+}
+
+.letter-txt {
+    max-width: 96px;
+    max-height: 96px;
+    min-width: 96px;
+    min-height: 96px;
+    font-size: 78px;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    align-self: center;
+    -unity-font-style: bold;
+}
+
+.letter-txt--preview {
+    color: rgb(0, 0, 0);
+}
+
+.word-container {
+    align-items: stretch;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex-direction: row;
+    min-width: 512px;
+}
+
+.visual-keyboard-row {
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.key-btn {
+    font-size: 64px;
+    -unity-font-style: bold;
+    max-width: 96px;
+    max-height: 96px;
+    min-width: 96px;
+    min-height: 96px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.enter-btn {
+    max-width: 152px;
+    max-height: 96px;
+    min-width: 152px;
+    min-height: 96px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(148, 184, 36);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font-style: bold;
+    font-size: 32px;
+}
+
+.backspace-btn {
+    max-width: 152px;
+    max-height: 96px;
+    min-width: 152px;
+    min-height: 92px;
+    font-size: 32px;
+    -unity-font-style: bold;
+    background-color: rgb(255, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    color: rgb(255, 255, 255);
+}

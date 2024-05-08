@@ -1,0 +1,147 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/style.uss?fileID=7433441132597879392&amp;guid=fbb36471515d76e4d8d390f4e7ff141f&amp;type=3#style" />
+    <ui:VisualElement name="header" style="max-height: 10%; background-color: rgb(255, 255, 255); justify-content: flex-end; flex-grow: 1; border-bottom-width: 8px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label tabindex="-1" text="Wordle" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); -unity-text-align: middle-center; font-size: 64px; -unity-font-style: bold;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="game-ui" style="flex-grow: 1; padding-top: 12px; padding-left: 0; padding-bottom: 12px; background-color: rgb(255, 255, 255);">
+        <ui:VisualElement name="word-0" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="word-1" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="word-2" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="word-3" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="word-4" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="word-5" class="word-container">
+            <ui:VisualElement name="letter-0" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-1" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-2" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-3" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-4" class="letter-container">
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="visual-keyboard" style="flex-grow: 0; min-height: 0; background-color: rgb(255, 255, 255); padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
+        <ui:VisualElement name="row-1" class="visual-keyboard-row">
+            <ui:Button text="Q" parse-escape-sequences="true" display-tooltip-when-elided="true" name="q-btn" class="key-btn" />
+            <ui:Button text="W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="w-btn" class="key-btn" />
+            <ui:Button text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="e-btn" class="key-btn" />
+            <ui:Button text="R" parse-escape-sequences="true" display-tooltip-when-elided="true" name="r-btn" class="key-btn" />
+            <ui:Button text="T" parse-escape-sequences="true" display-tooltip-when-elided="true" name="t-btn" class="key-btn" />
+            <ui:Button text="Y" parse-escape-sequences="true" display-tooltip-when-elided="true" name="y-btn" class="key-btn" />
+            <ui:Button text="U" parse-escape-sequences="true" display-tooltip-when-elided="true" name="u-btn" class="key-btn" />
+            <ui:Button text="I" parse-escape-sequences="true" display-tooltip-when-elided="true" name="i-btn" class="key-btn" />
+            <ui:Button text="O" parse-escape-sequences="true" display-tooltip-when-elided="true" name="o-btn" class="key-btn" />
+            <ui:Button text="P" parse-escape-sequences="true" display-tooltip-when-elided="true" name="p-btn" class="key-btn" />
+        </ui:VisualElement>
+        <ui:VisualElement name="row-2" class="visual-keyboard-row">
+            <ui:Button text="A" parse-escape-sequences="true" display-tooltip-when-elided="true" name="a-btn" class="key-btn" />
+            <ui:Button text="S" parse-escape-sequences="true" display-tooltip-when-elided="true" name="s-btn" class="key-btn" />
+            <ui:Button text="D" parse-escape-sequences="true" display-tooltip-when-elided="true" name="d-btn" class="key-btn" />
+            <ui:Button text="F" parse-escape-sequences="true" display-tooltip-when-elided="true" name="f-btn" class="key-btn" />
+            <ui:Button text="G" parse-escape-sequences="true" display-tooltip-when-elided="true" name="g-btn" class="key-btn" />
+            <ui:Button text="H" parse-escape-sequences="true" display-tooltip-when-elided="true" name="h-btn" class="key-btn" />
+            <ui:Button text="J" parse-escape-sequences="true" display-tooltip-when-elided="true" name="j-btn" class="key-btn" />
+            <ui:Button text="K" parse-escape-sequences="true" display-tooltip-when-elided="true" name="k-btn" class="key-btn" />
+            <ui:Button text="L" parse-escape-sequences="true" display-tooltip-when-elided="true" name="l-btn" class="key-btn" />
+        </ui:VisualElement>
+        <ui:VisualElement name="row-3" class="visual-keyboard-row">
+            <ui:Button text="Enter" parse-escape-sequences="true" display-tooltip-when-elided="true" name="enter-btn" class="enter-btn" />
+            <ui:Button text="Z" parse-escape-sequences="true" display-tooltip-when-elided="true" name="z-btn" class="key-btn" />
+            <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="x-btn" class="key-btn" />
+            <ui:Button text="C" parse-escape-sequences="true" display-tooltip-when-elided="true" name="c-btn" class="key-btn" />
+            <ui:Button text="V" parse-escape-sequences="true" display-tooltip-when-elided="true" name="v-btn" class="key-btn" />
+            <ui:Button text="B" parse-escape-sequences="true" display-tooltip-when-elided="true" name="b-btn" class="key-btn" />
+            <ui:Button text="N" parse-escape-sequences="true" display-tooltip-when-elided="true" name="n-btn" class="key-btn" />
+            <ui:Button text="M" parse-escape-sequences="true" display-tooltip-when-elided="true" name="m-btn" class="key-btn" />
+            <ui:Button text="Delete" parse-escape-sequences="true" display-tooltip-when-elided="true" name="backspace-btn" class="backspace-btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Label tabindex="-1" text="DEBUZ" parse-escape-sequences="true" display-tooltip-when-elided="true" name="keyword-txt" style="position: absolute; font-size: 48px; right: 0; top: 0;" />
+</ui:UXML>
