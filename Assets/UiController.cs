@@ -1,7 +1,8 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using DG.Tweening;
+using System;
 
 [RequireComponent(typeof(UIDocument))]
 public class UiController : MonoBehaviour
@@ -38,9 +39,14 @@ public class UiController : MonoBehaviour
         WordleController.Instance.OnNewKeyword += OnNewKeywordHandle;
         WordleController.Instance.OnAddLetter += OnAddLetterHandle;
         WordleController.Instance.OnRemoveLetter += OnRemoveLetterHandle;
-        WordleController.Instance.OnSubmitInputWord += OnSubmitInputWordHandle;
+        WordleController.Instance.OnAcceptInputWord += OnAcceptInputWordHandle;
+        WordleController.Instance.OnSubmitNotCompleteInputWord += ShakeWord;
+        WordleController.Instance.OnRejectInputWord += (lineIdx) => ShakeWord(lineIdx,5);
+
+        DOTween.Init();
     }
 
+    #region WordleController event handler
     void OnNewKeywordHandle(string newKeyword)
     {
         keywordTxt.text = newKeyword.ToUpper();
@@ -58,16 +64,16 @@ public class UiController : MonoBehaviour
         SetStateToLetterContainer(LetterContainerState.DEFAULT, lineIdx, characterIdx);
     }
 
-    void OnSubmitInputWordHandle(int lineIdx,LetterCorrectResult[] result)
+    void OnAcceptInputWordHandle(int lineIdx,LetterCorrectResult[] result)
     {
-        for(int i = 0; i < result.Length; i++)
+        for (int i = 0; i < result.Length; i++)
         {
             LetterContainerState letterContainerState;
-            if (result[i]==LetterCorrectResult.CORRECT)
+            if (result[i] == LetterCorrectResult.CORRECT)
             {
                 letterContainerState = LetterContainerState.CORRECT;
             }
-            else if(result[i]==LetterCorrectResult.SPOT_INCORRECT)
+            else if (result[i] == LetterCorrectResult.SPOT_INCORRECT)
             {
                 letterContainerState = LetterContainerState.SPOT_INCORRECT;
             }
@@ -76,11 +82,19 @@ public class UiController : MonoBehaviour
                 letterContainerState = LetterContainerState.INCORRECT;
             }
 
-            Debug.Log(letterContainerState);
-
-            SetStateToLetterContainer(letterContainerState,lineIdx,i);
+            FlipLetter(lineIdx,i, () => SetStateToLetterContainer(letterContainerState, lineIdx, i));
+            //SetStateToLetterContainer(letterContainerState, lineIdx, _i);
+            /*
+            Sequence sequence = DOTween.Sequence();
+            var wordContainer = root.Q($"word-{lineIdx}");
+            var letterContainer = wordContainer.Q($"letter-{_i}");
+            sequence.Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, new Vector3(0, 1, 1), .2f).OnComplete(() => SetStateToLetterContainer(letterContainerState, lineIdx, _i))) //
+                .Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, Vector3.one, .2f))
+                .Restart();
+            */
         }
     }
+    #endregion
 
     void SetLetter(int lineIdx, int characterIdx, string newString)
     {
@@ -131,6 +145,50 @@ public class UiController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         visualElement.AddToClassList(className);
     }
+
+    
+    // animation
+    void ShakeWord(int lineIdx, int length)
+    {
+        var strength = 4;
+        float timePerLoop = 0.08f;
+        var halfTimePerLoop = timePerLoop/2;
+
+        for(int i = 0; i < length; i++)
+        {
+            Sequence sequence = DOTween.Sequence();
+            var wordContainer = root.Q($"word-{lineIdx}");
+            var letterContainer = wordContainer.Q($"letter-{i}");
+            sequence.Append(DOTween.To(() => letterContainer.transform.position, (x) => letterContainer.transform.position = x, new Vector3(-strength, 0, 0), halfTimePerLoop));
+            sequence.Append(DOTween.To(() => letterContainer.transform.position, (x) => letterContainer.transform.position = x, new Vector3(strength, 0, 0), timePerLoop).SetLoops(3,LoopType.Yoyo));
+            sequence.Append(DOTween.To(() => letterContainer.transform.position, (x) => letterContainer.transform.position = x, new Vector3(0, 0, 0), halfTimePerLoop));
+            sequence.Play();
+        }
+    }
+
+    void FlipLetter(int lineIdx, int letterIdx,Action OnHalfComplete)
+    {
+        Sequence sequence = DOTween.Sequence();
+        var wordContainer = root.Q($"word-{lineIdx}");
+        var letterContainer = wordContainer.Q($"letter-{letterIdx}");
+        sequence.Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, new Vector3(0, 1, 1), .2f));
+        sequence.Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, Vector3.one, .2f));
+        sequence.OnStart(() => OnHalfComplete());
+        sequence.Play();
+    }
+
+    void FlipWord(int lineIdx, Action OnHalfComplete)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Sequence sequence = DOTween.Sequence();
+            var wordContainer = root.Q($"word-{lineIdx}");
+            var letterContainer = wordContainer.Q($"letter-{i}");
+            sequence.Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, new Vector3 (0,1,1), .2f).OnComplete(()=> OnHalfComplete()));
+            sequence.Append(DOTween.To(() => letterContainer.transform.scale, (x) => letterContainer.transform.scale = x, Vector3.one, .2f));
+            sequence.Play();
+        }
+    }
 }
 
 public class VisaulKeyboardController
@@ -160,12 +218,7 @@ public class VisaulKeyboardController
     void OnClickEnterButton()
     {
         Debug.Log($"enter-button clicked");
-        if (!WordleController.Instance.SubmitInputWord())
-        {
-            // do shaking
-        }
-        
-
+        WordleController.Instance.SubmitInputWord();
     }
 
     void OnClickBackspaceButton()
