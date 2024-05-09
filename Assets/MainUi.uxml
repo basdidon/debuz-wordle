@@ -151,8 +151,8 @@
         <ui:Label tabindex="-1" text="Time(s)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-2" />
         <ui:Label tabindex="-1" text="Try again ?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-3" style="font-size: 56px; margin-top: 36px;" />
         <ui:VisualElement name="popuu-button-container" style="flex-grow: 1; height: 100%; flex-direction: row; align-items: center; justify-content: space-around; padding-right: 240px; padding-left: 240px;">
-            <ui:Button text="Yes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start-over-btn" class="popup-btn popup-yes-btn" />
-            <ui:Button text="No" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit-btn" class="popup-btn popup-no-btn" />
+            <ui:Button text="Yes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start-over-btn" focusable="false" class="popup-btn popup-yes-btn" />
+            <ui:Button text="No" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit-btn" focusable="false" class="popup-btn popup-no-btn" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -14,6 +14,7 @@ public class VirtualKeyboardController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(2);
         CorrectnessStates = new(26);
         KeyButtons = new(26);
 
@@ -27,25 +28,31 @@ public class VirtualKeyboardController : MonoBehaviour
 
     void BindElements()
     {
-        for (char c = 'a'; c <= 'z'; c++) // a-z
+        foreach(var key in WordleController.Instance.Keys) 
         {
-            var _c = c;
-            var btn = container.Q<Button>($"{c}-btn");
-            btn.clicked += () => OnClickKeyButton(_c);
+            char lowerKey = char.ToLower(key);
+            var btn = container.Q<Button>($"{lowerKey}-btn");
+            if (btn == null)
+                Debug.Log(key);
+            btn.clicked += () => OnClickKeyButton(key);
 
             btn.RemoveFromClassList("key-btn--incorrect");
             btn.RemoveFromClassList("key-btn--spot-incorrect");
             btn.RemoveFromClassList("key-btn--correct");
 
-            CorrectnessStates.Add(c, WordCorrectness.DEFAULT);
-            KeyButtons.Add(c, btn);
+            btn.focusable = false;
+
+            CorrectnessStates.Add(key, WordCorrectness.DEFAULT);
+            KeyButtons.Add(key, btn);
         }
 
         var enterBtn = container.Q<Button>("enter-btn");
         enterBtn.clicked += OnClickEnterButton;
+        enterBtn.focusable = false;
 
         var backspaceBtn = container.Q<Button>("backspace-btn");
         backspaceBtn.clicked += OnClickBackspaceButton;
+        backspaceBtn.focusable = false;
     }
 
     private void OnEnable()
@@ -116,10 +123,10 @@ public class VirtualKeyboardController : MonoBehaviour
 
     public void OnStartOverHandle()
     {
-        for (char c = 'a'; c <= 'z'; c++)
+        foreach (var key in WordleController.Instance.Keys)
         {
-            CorrectnessStates[c] = WordCorrectness.DEFAULT;
-            var btn = KeyButtons[c];
+            CorrectnessStates[key] = WordCorrectness.DEFAULT;
+            var btn = KeyButtons[key];
 
             btn.RemoveFromClassList("key-btn--incorrect");
             btn.RemoveFromClassList("key-btn--spot-incorrect");

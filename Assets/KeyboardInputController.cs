@@ -5,21 +5,11 @@ public class KeyboardInputController : MonoBehaviour
 {
     InputActionMap ActionMap { get; set; }
 
-    char[] keys;
-
     private void Awake()
     {
         ActionMap = new InputActionMap();
 
-        keys = new char[26];
-        for (int i= 0;i<26;i++)
-        {
-            char c = (char)(i + 'A');
-            keys[i] = c;
-            Debug.Log($"bind {c}");
-        }
-
-        foreach(var key in keys)
+        foreach(var key in WordleController.Instance.Keys)
         {
             var action = ActionMap.AddAction($"{key}", binding: $"<KeyBoard>/{key}");
             action.performed += ctx =>

@@ -16,6 +16,9 @@ public class WordleController : MonoBehaviour
 {
     public static WordleController Instance { get; private set; }
 
+    char[] keys;
+    public IReadOnlyList<char> Keys => keys;
+
     string[] words;
 
     string keyword;
@@ -30,7 +33,7 @@ public class WordleController : MonoBehaviour
     }
 
     StringBuilder InputWordSB { get; set; }
-    List<string> guessWords;
+    [SerializeField] List<string> guessWords;
 
     public int InputLineIdx => guessWords.Count;
     public int InputLetterIdx => InputWordSB.Length;
@@ -55,6 +58,15 @@ public class WordleController : MonoBehaviour
         else
         {
             Instance = this;
+        }
+        Debug.Log(1);
+
+        keys = new char[26];
+        for (int i = 0; i < 26; i++)
+        {
+            char c = (char)(i + 'A');
+            keys[i] = c;
+            //Debug.Log($"bind {c}");
         }
     }
 
@@ -128,9 +140,10 @@ public class WordleController : MonoBehaviour
     {
         int length = InputWordSB.Length;
 
+        Debug.Log("Submit");
         if (length == 5)
         {
-            Debug.Log("Submit");
+            Debug.Log("Submit length = 5");
             var correctnessResult = new WordCorrectness[5];
             string wordString = InputWordSB.ToString().ToLower();  // caching string
 
@@ -141,10 +154,12 @@ public class WordleController : MonoBehaviour
             }
 
 
+            Debug.Log($"{wordString} vs {keyword}");
             for (int i = 0; i < 5; i++)
             {
                 if (wordString[i] == keyword[i]) // all keywords are lowercase
                 {
+                    
                     correctnessResult[i] = WordCorrectness.CORRECT;
                 }
             }
