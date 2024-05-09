@@ -6,7 +6,7 @@
     <ui:VisualElement name="game-ui" style="flex-grow: 1; padding-top: 12px; padding-left: 0; padding-bottom: 12px; background-color: rgb(255, 255, 255);">
         <ui:VisualElement name="word-0" class="word-container">
             <ui:VisualElement name="letter-0" class="letter-container">
-                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="letter-txt" />
+                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
             </ui:VisualElement>
             <ui:VisualElement name="letter-1" class="letter-container">
                 <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="letter-txt" />
@@ -109,9 +109,9 @@
     </ui:VisualElement>
     <ui:VisualElement name="visual-keyboard" style="flex-grow: 0; min-height: 0; background-color: rgb(255, 255, 255); padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
         <ui:VisualElement name="row-1" class="visual-keyboard-row">
-            <ui:Button text="Q" parse-escape-sequences="true" display-tooltip-when-elided="true" name="q-btn" class="key-btn" />
-            <ui:Button text="W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="w-btn" class="key-btn" />
-            <ui:Button text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="e-btn" class="key-btn" />
+            <ui:Button text="Q" parse-escape-sequences="true" display-tooltip-when-elided="true" name="q-btn" class="key-btn key-btn--correct" />
+            <ui:Button text="W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="w-btn" class="key-btn key-btn--spot-incorrect" />
+            <ui:Button text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="e-btn" class="key-btn key-btn--incorrect" />
             <ui:Button text="R" parse-escape-sequences="true" display-tooltip-when-elided="true" name="r-btn" class="key-btn" />
             <ui:Button text="T" parse-escape-sequences="true" display-tooltip-when-elided="true" name="t-btn" class="key-btn" />
             <ui:Button text="Y" parse-escape-sequences="true" display-tooltip-when-elided="true" name="y-btn" class="key-btn" />
@@ -144,4 +144,15 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Label tabindex="-1" text="DEBUZ" parse-escape-sequences="true" display-tooltip-when-elided="true" name="keyword-txt" style="position: absolute; font-size: 48px; right: 0; top: 0;" />
+    <ui:VisualElement name="popup-menu" class="popup-container" style="transition-timing-function: ease-out-bounce;">
+        <ui:Label tabindex="-1" text="Hooray !!!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-title" style="font-size: 84px; -unity-font-style: bold; margin-bottom: 24px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-bottom-width: 4px;" />
+        <ui:Label tabindex="-1" text="You have complete a word within :" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-0" />
+        <ui:Label tabindex="-1" text="3" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-1" style="font-size: 84px; -unity-font-style: bold;" />
+        <ui:Label tabindex="-1" text="Time(s)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-2" />
+        <ui:Label tabindex="-1" text="Try again ?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="popup-line-3" style="font-size: 56px; margin-top: 36px;" />
+        <ui:VisualElement name="popuu-button-container" style="flex-grow: 1; height: 100%; flex-direction: row; align-items: center; justify-content: space-around; padding-right: 240px; padding-left: 240px;">
+            <ui:Button text="Yes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start-over-btn" class="popup-btn popup-yes-btn" />
+            <ui:Button text="No" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit-btn" class="popup-btn popup-no-btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
