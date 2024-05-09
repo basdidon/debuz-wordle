@@ -99,12 +99,13 @@ public class WordleController : MonoBehaviour
             Debug.Log("Submit");
             var result = new LetterCorrectResult[5];
             string wordString = string.Empty;
-            for(int i = 0; i < result.Length; i++)
+            for (int i = 0; i < result.Length; i++)
             {
-                if(char.ToUpper(inputWord[i]) == char.ToUpper(keyword[i]))
+                if (char.ToUpper(inputWord[i]) == char.ToUpper(keyword[i]))
                 {
                     result[i] = LetterCorrectResult.CORRECT;
-                }else if(keyword.Contains(char.ToLower(inputWord[i])))
+                }
+                else if (keyword.Contains(char.ToLower(inputWord[i])))
                 {
                     result[i] = LetterCorrectResult.SPOT_INCORRECT;
                 }
@@ -116,15 +117,15 @@ public class WordleController : MonoBehaviour
                 wordString += inputWord[i];
             }
 
-            OnSubmitInputWord(guessWords.Count,result);
+            OnSubmitInputWord(guessWords.Count, result);
             guessWords.Add(wordString);
             inputWord.Clear();
 
-            if(result.All(i=>i == LetterCorrectResult.CORRECT))
+            if (result.All(i => i == LetterCorrectResult.CORRECT))
             {
                 PlayerWinGame();
             }
-            else if(guessWords.Count >= 6)
+            else if (guessWords.Count >= 6)
             {
                 PlayerLoseGame();
             }
