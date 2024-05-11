@@ -4,6 +4,8 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(UIDocument))]
 public class PopupUiController : MonoBehaviour
 {
+    WordleController WordleController { get; set; }
+
     VisualElement rootContainer;
 
     Label title;
@@ -17,6 +19,8 @@ public class PopupUiController : MonoBehaviour
 
     private void Awake()
     {
+        WordleController = WordleController.Instance;
+
         rootContainer = GetComponent<UIDocument>().rootVisualElement.Q("popup-menu");
 
         title = rootContainer.Q<Label>("popup-title");
@@ -28,9 +32,15 @@ public class PopupUiController : MonoBehaviour
         startOverBtn = rootContainer.Q<Button>("start-over-btn");
         startOverBtn.clicked += OnStartOverClick;
         quitBtn = rootContainer.Q<Button>("quit-btn");
+        quitBtn.clicked += OnQuit;
 
-        WordleController.Instance.OnWinGame += OnWinGameHandle;
-        WordleController.Instance.OnLoseGame += OnLoseGameHandle;
+        WordleController.OnWinGame += OnWinGameHandle;
+        WordleController.OnLoseGame += OnLoseGameHandle;
+    }
+
+    private void OnQuit()
+    {
+        Application.Quit();
     }
 
     public void Display()
@@ -56,7 +66,7 @@ public class PopupUiController : MonoBehaviour
 
     public void OnLoseGameHandle(string keyword)
     {
-        title.text = "Eww, Loser !!!";
+        title.text = "You're lost !!!";
         line_0.text = "a keyword is : ";
         line_1.text = keyword.ToUpper();
         line_2.text = "it very very close";
@@ -66,7 +76,7 @@ public class PopupUiController : MonoBehaviour
 
     void OnStartOverClick()
     {
-        WordleController.Instance.StartOver();
+        WordleController.StartOver();
         Hide();
     }
 }

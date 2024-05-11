@@ -1,40 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
 public class VirtualKeyboardController : MonoBehaviour
 {
+    WordleController WordleController { get; set; }
     Dictionary<char, WordCorrectness> CorrectnessStates { get; set; }
     Dictionary<char, Button> KeyButtons { get; set; }
-
-    public bool IsEnable { get; private set; } = false;
+    Button EnterBtn { get; set; }
+    Button BackspaceBtn { get; set; }
 
     VisualElement container;
 
     private void Awake()
     {
-        Debug.Log(2);
+        WordleController = WordleController.Instance;
+
         CorrectnessStates = new(26);
         KeyButtons = new(26);
 
-        container = GetComponent<UIDocument>().rootVisualElement.Q("visual-keyboard");
+        container = GetComponent<UIDocument>().rootVisualElement.Q("virtual-keyboard");
         BindElements();
 
-        WordleController.Instance.OnAcceptInputWord += OnAcceptInputWordHandle;
-        WordleController.Instance.OnStartOver += OnStartOverHandle;
+        WordleController.OnAcceptInputWord += OnAcceptInputWordHandle;
+        WordleController.OnWinGame += (_, _) => DisableInput();
+        WordleController.OnLoseGame += _ => DisableInput();
+        WordleController.OnStartOver += OnStartOverHandle;
 
     }
 
     void BindElements()
     {
-        foreach(var key in WordleController.Instance.Keys) 
+        foreach(var key in WordleController.Keys) 
         {
             char lowerKey = char.ToLower(key);
             var btn = container.Q<Button>($"{lowerKey}-btn");
             if (btn == null)
                 Debug.Log(key);
-            btn.clicked += () => OnClickKeyButton(key);
+            btn.clicked += () => WordleController.InputLetter(key);
 
             btn.RemoveFromClassList("key-btn--incorrect");
             btn.RemoveFromClassList("key-btn--spot-incorrect");
@@ -46,84 +51,82 @@ public class VirtualKeyboardController : MonoBehaviour
             KeyButtons.Add(key, btn);
         }
 
-        var enterBtn = container.Q<Button>("enter-btn");
-        enterBtn.clicked += OnClickEnterButton;
-        enterBtn.focusable = false;
+        EnterBtn = container.Q<Button>("enter-btn");
+        EnterBtn.clicked += WordleController.SubmitInputWord;
+        EnterBtn.focusable = false;
 
-        var backspaceBtn = container.Q<Button>("backspace-btn");
-        backspaceBtn.clicked += OnClickBackspaceButton;
-        backspaceBtn.focusable = false;
+        BackspaceBtn = container.Q<Button>("backspace-btn");
+        BackspaceBtn.clicked += WordleController.RemoveLetter;
+        BackspaceBtn.focusable = false;
     }
 
-    private void OnEnable()
-    {
-        IsEnable = true;
-    }
-
-    private void OnDisable()
-    {
-        IsEnable = false;
-    }
+    private void OnEnable() => EnableInput();
+    private void OnDisable() => DisableInput();
 
     void OnAcceptInputWordHandle(int lineIdx,string inputWord,WordCorrectness[] wordCorrect)
     {
         for(int i = 0; i < 5; i++)
         {
-            SetCorrectionState(inputWord[i], wordCorrect[i]);
+            SetCorrectnessState(inputWord[i], wordCorrect[i]);
         }
     }
 
-    void OnClickKeyButton(char c)
+    void SetCorrectnessState(char c, WordCorrectness correctnessState)
     {
-        if(IsEnable) WordleController.Instance.InputLetter(c);
-    }
+        char upperKey = char.ToUpper(c);
 
-    void OnClickEnterButton()
-    {
-        if (IsEnable) WordleController.Instance.SubmitInputWord();
-    }
-
-    void OnClickBackspaceButton()
-    {
-        if (IsEnable) WordleController.Instance.RemoveLetter();
-    }
-
-    public void SetCorrectionState(char c, WordCorrectness correctionState)
-    {
-        if (!CorrectnessStates.ContainsKey(c))
+        if (!CorrectnessStates.ContainsKey(upperKey) || CorrectnessStates[upperKey] > correctnessState)
             return;
 
-        if (CorrectnessStates[c] < correctionState)
+        CorrectnessStates[upperKey] = correctnessState;
+
+        if (!KeyButtons.ContainsKey(upperKey))
+            return;
+
+        var btn = KeyButtons[upperKey];
+
+        btn.RemoveFromClassList("key-btn--incorrect");
+        btn.RemoveFromClassList("key-btn--spot-incorrect");
+        btn.RemoveFromClassList("key-btn--correct");
+
+        if (correctnessState == WordCorrectness.INCORRECT)
         {
-            CorrectnessStates[c] = correctionState;
-
-            if (!KeyButtons.ContainsKey(c))
-                return;
-
-            var btn = KeyButtons[c];
-
-            btn.RemoveFromClassList("key-btn--incorrect");
-            btn.RemoveFromClassList("key-btn--spot-incorrect");
-            btn.RemoveFromClassList("key-btn--correct");
-
-            if (correctionState == WordCorrectness.INCORRECT)
-            {
-                btn.AddToClassList("key-btn--incorrect");
-            }
-            else if (correctionState == WordCorrectness.SPOT_INCORRECT)
-            {
-                btn.AddToClassList("key-btn--spot-incorrect");
-            }
-            else if (correctionState == WordCorrectness.CORRECT)
-            {
-                btn.AddToClassList("key-btn--correct");
-            }
+            btn.AddToClassList("key-btn--incorrect");
         }
+        else if (correctnessState == WordCorrectness.SPOT_INCORRECT)
+        {
+            btn.AddToClassList("key-btn--spot-incorrect");
+        }
+        else if (correctnessState == WordCorrectness.CORRECT)
+        {
+            btn.AddToClassList("key-btn--correct");
+        }
+    }
+    
+
+    void EnableInput()
+    {
+        foreach(var key in KeyButtons.Keys)
+        {
+            KeyButtons[key].SetEnabled(true);
+        }
+        EnterBtn.SetEnabled(true);
+        BackspaceBtn.SetEnabled(true);
+    }
+
+    void DisableInput()
+    {
+        foreach (var key in KeyButtons.Keys)
+        {
+            KeyButtons[key].SetEnabled(false);
+        }
+        EnterBtn.SetEnabled(false);
+        BackspaceBtn.SetEnabled(false);
     }
 
     public void OnStartOverHandle()
     {
-        foreach (var key in WordleController.Instance.Keys)
+        foreach (var key in WordleController.Keys)
         {
             CorrectnessStates[key] = WordCorrectness.DEFAULT;
             var btn = KeyButtons[key];
@@ -132,5 +135,7 @@ public class VirtualKeyboardController : MonoBehaviour
             btn.RemoveFromClassList("key-btn--spot-incorrect");
             btn.RemoveFromClassList("key-btn--correct");
         }
+
+        EnableInput();
     }
 }

@@ -107,8 +107,8 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="visual-keyboard" style="flex-grow: 0; min-height: 0; background-color: rgb(255, 255, 255); padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
-        <ui:VisualElement name="row-1" class="visual-keyboard-row">
+    <ui:VisualElement name="virtual-keyboard" class="virtual-keyboard">
+        <ui:VisualElement name="row-1" class="virsual-keyboard-row">
             <ui:Button text="Q" parse-escape-sequences="true" display-tooltip-when-elided="true" name="q-btn" class="key-btn key-btn--correct" />
             <ui:Button text="W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="w-btn" class="key-btn key-btn--spot-incorrect" />
             <ui:Button text="E" parse-escape-sequences="true" display-tooltip-when-elided="true" name="e-btn" class="key-btn key-btn--incorrect" />
@@ -120,7 +120,7 @@
             <ui:Button text="O" parse-escape-sequences="true" display-tooltip-when-elided="true" name="o-btn" class="key-btn" />
             <ui:Button text="P" parse-escape-sequences="true" display-tooltip-when-elided="true" name="p-btn" class="key-btn" />
         </ui:VisualElement>
-        <ui:VisualElement name="row-2" class="visual-keyboard-row">
+        <ui:VisualElement name="row-2" class="virsual-keyboard-row">
             <ui:Button text="A" parse-escape-sequences="true" display-tooltip-when-elided="true" name="a-btn" class="key-btn" />
             <ui:Button text="S" parse-escape-sequences="true" display-tooltip-when-elided="true" name="s-btn" class="key-btn" />
             <ui:Button text="D" parse-escape-sequences="true" display-tooltip-when-elided="true" name="d-btn" class="key-btn" />
@@ -131,7 +131,7 @@
             <ui:Button text="K" parse-escape-sequences="true" display-tooltip-when-elided="true" name="k-btn" class="key-btn" />
             <ui:Button text="L" parse-escape-sequences="true" display-tooltip-when-elided="true" name="l-btn" class="key-btn" />
         </ui:VisualElement>
-        <ui:VisualElement name="row-3" class="visual-keyboard-row">
+        <ui:VisualElement name="row-3" class="virsual-keyboard-row">
             <ui:Button text="Enter" parse-escape-sequences="true" display-tooltip-when-elided="true" name="enter-btn" class="enter-btn" />
             <ui:Button text="Z" parse-escape-sequences="true" display-tooltip-when-elided="true" name="z-btn" class="key-btn" />
             <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="x-btn" class="key-btn" />

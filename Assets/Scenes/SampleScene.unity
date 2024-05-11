@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809cc91664cd2684a8157c8fe4dc8f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guessWords: []
 --- !u!1 &958950809
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,8 +315,8 @@ GameObject:
   - component: {fileID: 958950810}
   - component: {fileID: 958950811}
   - component: {fileID: 958950812}
-  - component: {fileID: 958950813}
   - component: {fileID: 958950814}
+  - component: {fileID: 958950813}
   m_Layer: 0
   m_Name: Ui
   m_TagString: Untagged

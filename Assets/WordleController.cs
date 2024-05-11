@@ -42,8 +42,7 @@ public class WordleController : MonoBehaviour
     public event Action<int, int, char> OnAddLetter;
     public event Action<int, int> OnRemoveLetter;
     public event Action<int, string,WordCorrectness[]> OnAcceptInputWord;
-    public event Action<int, int> OnSubmitNotCompleteInputWord;
-    public event Action<int> OnRejectInputWord;
+    public event Action<int,int> OnRejectInputWord;
 
     public event Action<string, int> OnWinGame;
     public event Action<string> OnLoseGame;
@@ -59,14 +58,12 @@ public class WordleController : MonoBehaviour
         {
             Instance = this;
         }
-        Debug.Log(1);
 
         keys = new char[26];
         for (int i = 0; i < 26; i++)
         {
             char c = (char)(i + 'A');
             keys[i] = c;
-            //Debug.Log($"bind {c}");
         }
     }
 
@@ -95,7 +92,7 @@ public class WordleController : MonoBehaviour
         Keyword = words[UnityEngine.Random.Range(0, words.Length)];
     }
 
-    public bool InputLetter(char c)
+    public void InputLetter(char c)
     {
         int length = InputWordSB.Length;
         if(length < 5)
@@ -103,14 +100,11 @@ public class WordleController : MonoBehaviour
             int characterIdx = length;
             InputWordSB.Append(c);
             OnAddLetter?.Invoke(guessWords.Count,characterIdx,c);
-            return true;
         }
         else
         {
-            Debug.Log("full");
-            return true;
+            OnRejectInputWord?.Invoke(guessWords.Count,5);
         }
-
     }
 
     public void RemoveLetter()
@@ -138,88 +132,63 @@ public class WordleController : MonoBehaviour
 
     public void SubmitInputWord()
     {
+        Debug.Log("Submit");
         int length = InputWordSB.Length;
 
-        Debug.Log("Submit");
-        if (length == 5)
+        if (length != 5)
         {
-            Debug.Log("Submit length = 5");
-            var correctnessResult = new WordCorrectness[5];
-            string wordString = InputWordSB.ToString().ToLower();  // caching string
-
-            if (!IsValidWord(wordString) || guessWords.Contains(wordString))
-            {
-                OnRejectInputWord?.Invoke(guessWords.Count);
-                return;
-            }
-
-
-            Debug.Log($"{wordString} vs {keyword}");
-            for (int i = 0; i < 5; i++)
-            {
-                if (wordString[i] == keyword[i]) // all keywords are lowercase
-                {
-                    
-                    correctnessResult[i] = WordCorrectness.CORRECT;
-                }
-            }
-            DebugLetterCorrectResult("Correct check: ",correctnessResult);
-
-            for (int i = 0; i < 5; i++)
-            {
-                if (correctnessResult[i] == WordCorrectness.CORRECT)
-                    continue;
-
-                for (int j = 0; j < 5; j++)
-                {
-                    if(keyword[i] == wordString[j] && correctnessResult[j] == WordCorrectness.DEFAULT)
-                    {
-                        correctnessResult[j] = WordCorrectness.SPOT_INCORRECT;
-                        break;
-                    }
-                }
-            }
-            DebugLetterCorrectResult("SpotIncorrect check: ", correctnessResult);
-
-            for (int i =0;i < 5; i++)
-            {
-                if(correctnessResult[i] == WordCorrectness.DEFAULT)
-                {
-                    correctnessResult[i] = WordCorrectness.INCORRECT;
-                }
-            }
-            DebugLetterCorrectResult("incorrect check : ", correctnessResult);
-
-            OnAcceptInputWord?.Invoke(guessWords.Count, wordString, correctnessResult);
-            guessWords.Add(wordString);
-            InputWordSB.Clear();
-
-            if (WinGameCheck(correctnessResult))
-            {
-                PlayerWinGame();
-            }else if (LoseGameCheck())
-            {
-                PlayerLoseGame();   
-            }
+            OnRejectInputWord?.Invoke(guessWords.Count, InputWordSB.Length);
+            return;
         }
-        else
+
+        var correctnessResult = new WordCorrectness[5];
+        string inputWord = InputWordSB.ToString().ToLower();  // caching string
+
+        if (!IsValidWord(inputWord) || guessWords.Contains(inputWord))
         {
-            OnSubmitNotCompleteInputWord?.Invoke(guessWords.Count, InputWordSB.Length);
+            OnRejectInputWord?.Invoke(guessWords.Count, 5);
+            return;
         }
+
+        Debug.Log($"{inputWord} : {keyword}");
+        for (int i = 0; i < 5; i++)
+        {
+            // all keywords are lowercase
+            correctnessResult[i] = inputWord[i] == keyword[i] ? WordCorrectness.CORRECT : WordCorrectness.INCORRECT;
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (correctnessResult[i] == WordCorrectness.CORRECT)
+                continue;
+
+            for (int j = 0; j < 5; j++)
+            {
+                if (keyword[i] == inputWord[j] && correctnessResult[j] == WordCorrectness.INCORRECT)
+                {
+                    correctnessResult[j] = WordCorrectness.SPOT_INCORRECT;
+                    break;
+                }
+            }  
+        }
+
+        OnAcceptInputWord?.Invoke(guessWords.Count, inputWord, correctnessResult);
+        guessWords.Add(inputWord);
+        InputWordSB.Clear();
+
+        if (WinGameCheck(correctnessResult))
+        {
+            PlayerWinGame();
+        }
+        else if (LoseGameCheck())
+        {
+            PlayerLoseGame();
+        }
+
+
+
     }
 
-    void DebugLetterCorrectResult(string prefix, WordCorrectness[] correctnessResult)
-    {
-        StringBuilder sb = new();
-        sb.Append(prefix);
-
-        for(int i = 0;i < 5; i++)
-        {
-            sb.Append($"{correctnessResult[i]} ,");
-        }
-
-        Debug.Log(sb.ToString());
-    }
 
     bool WinGameCheck(WordCorrectness[] correctnessResult)
     {
@@ -238,7 +207,6 @@ public class WordleController : MonoBehaviour
 
     void PlayerWinGame()
     {
-        Debug.Log("end game");
         OnWinGame?.Invoke(keyword,guessWords.Count);
     }
 
@@ -247,4 +215,18 @@ public class WordleController : MonoBehaviour
         OnLoseGame?.Invoke(keyword);
     }
 
+    /*
+    void DebugLetterCorrectResult(string prefix, WordCorrectness[] correctnessResult)
+    {
+        StringBuilder sb = new();
+        sb.Append(prefix);
+
+        for(int i = 0;i < 5; i++)
+        {
+            sb.Append($"{correctnessResult[i]} ,");
+        }
+
+        Debug.Log(sb.ToString());
+    }
+    */
 }

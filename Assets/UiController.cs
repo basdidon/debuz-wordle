@@ -7,6 +7,8 @@ using System;
 [RequireComponent(typeof(UIDocument))]
 public class UiController : MonoBehaviour
 {
+    WordleController WordleController { get; set; }
+
     public UIDocument UiDoc { get; private set; }
 
     VisualElement root;
@@ -24,6 +26,8 @@ public class UiController : MonoBehaviour
 
     private void Awake()
     {
+        WordleController = WordleController.Instance;
+
         UiDoc = GetComponent<UIDocument>();
 
         root = UiDoc.rootVisualElement;
@@ -40,14 +44,13 @@ public class UiController : MonoBehaviour
 
         keywordTxt = root.Q<Label>("keyword-txt");
 
-        WordleController.Instance.OnNewKeyword += OnNewKeywordHandle;
-        WordleController.Instance.OnAddLetter += OnAddLetterHandle;
-        WordleController.Instance.OnRemoveLetter += OnRemoveLetterHandle;
-        WordleController.Instance.OnAcceptInputWord += OnAcceptInputWordHandle;
-        WordleController.Instance.OnSubmitNotCompleteInputWord += ShakeWord;
-        WordleController.Instance.OnRejectInputWord += (lineIdx) => ShakeWord(lineIdx,5);
+        WordleController.OnNewKeyword += OnNewKeywordHandle;
+        WordleController.OnAddLetter += OnAddLetterHandle;
+        WordleController.OnRemoveLetter += OnRemoveLetterHandle;
+        WordleController.OnAcceptInputWord += OnAcceptInputWordHandle;
+        WordleController.OnRejectInputWord += (lineIdx,length) => ShakeWord(lineIdx,length);
 
-        WordleController.Instance.OnStartOver += OnStartOverHandle;
+        WordleController.OnStartOver += OnStartOverHandle;
 
         DOTween.Init().SetCapacity(200, 10);
     }
