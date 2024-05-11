@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public enum WordCorrectness
@@ -69,9 +69,8 @@ public class WordleController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(File.Exists("Assets/valid-wordle-words.txt"));
-
-        words = File.ReadAllLines("Assets/valid-wordle-words.txt");
+        var textAsset = Resources.Load<TextAsset>("valid-wordle-words");
+        words = textAsset.text.Split(new Char[] { }, StringSplitOptions.RemoveEmptyEntries);
 
         InputWordSB = new(5);
         guessWords = new();
@@ -120,6 +119,7 @@ public class WordleController : MonoBehaviour
 
     bool IsValidWord(string input)
     {
+        Debug.Log($"{words[0]}{words[0].Length}:{input}{input.Length}");
         foreach (var word in words)
         {
             if (word == input)
@@ -144,6 +144,7 @@ public class WordleController : MonoBehaviour
         var correctnessResult = new WordCorrectness[5];
         string inputWord = InputWordSB.ToString().ToLower();  // caching string
 
+        Debug.Log($"{!IsValidWord(inputWord)} {guessWords.Contains(inputWord)}");
         if (!IsValidWord(inputWord) || guessWords.Contains(inputWord))
         {
             OnRejectInputWord?.Invoke(guessWords.Count, 5);
